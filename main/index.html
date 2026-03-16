@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oreoluwa · celebration of life</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #000000;
+      /* pure black, solemn */
+      color: #e0ddd5;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ---------- FALLING GOLD PARTICLES (always there, behind) ---------- */
+    #particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .gold-particle {
+      position: absolute;
+      background-color: rgba(212, 175, 55, 0.5);
+      border-radius: 50%;
+      box-shadow: 0 0 10px #d4af37;
+      width: 6px;
+      height: 6px;
+      top: -20px;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.9;
+      }
+
+      90% {
+        opacity: 0.3;
+      }
+
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* ---------- main container: all pages stack, but only one visible ---------- */
+    .pages-container {
+      width: 100%;
+      max-width: 820px;
+      min-height: 600px;
+      position: relative;
+      z-index: 5;
+      background: rgba(10, 10, 10, 0.75);
+      /* deep black with slight translucency */
+      backdrop-filter: blur(5px);
+      border: 1px solid #d4af37;
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 0 1px #d4af37 inset;
+      padding: 2rem 1.8rem;
+    }
+
+    /* every page (section) uses absolute positioning inside the relative container */
+    .page {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      width: 100%;
+    }
+
+    .page.active {
+      display: block;
+      opacity: 1;
+    }
+
+    /* ----- order of service page (page 1) ----- */
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+      padding-bottom: 1.5rem;
+    }
+
+    .cross {
+      font-size: 4rem;
+      color: #d4af37;
+      filter: drop-shadow(0 0 8px #b49450);
+      animation: glow 3s infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 8px #d4af37;
+      }
+
+      to {
+        text-shadow: 0 0 20px #f5d742, 0 0 8px #aa8c3a;
+      }
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      letter-spacing: 3px;
+      color: #d4af37;
+      font-weight: 400;
+    }
+
+    .sub-name {
+      font-size: 1.6rem;
+      color: #fff;
+      font-style: italic;
+      border-top: 1px dashed #d4af37;
+      border-bottom: 1px dashed #d4af37;
+      display: inline-block;
+      padding: 0.6rem 2rem;
+      margin: 0.8rem 0 0;
+    }
+
+    .order-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .order-item {
+      background: rgba(25, 25, 30, 0.8);
+      border-left: 5px solid #d4af37;
+      padding: 0.9rem 1.5rem;
+      border-radius: 0 18px 18px 0;
+      transition: 0.2s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      opacity: 0;
+      transform: translateX(-10px);
+      animation: slideIn 0.4s forwards;
+    }
+
+    .order-item:hover {
+      background: #2a2a33;
+      border-left-width: 8px;
+    }
+
+    @keyframes slideIn {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* delays */
+    .order-item:nth-child(1) {
+      animation-delay: 0.05s;
+    }
+
+    .order-item:nth-child(2) {
+      animation-delay: 0.10s;
+    }
+
+    .order-item:nth-child(3) {
+      animation-delay: 0.15s;
+    }
+
+    .order-item:nth-child(4) {
+      animation-delay: 0.20s;
+    }
+
+    .order-item:nth-child(5) {
+      animation-delay: 0.25s;
+    }
+
+    .order-item:nth-child(6) {
+      animation-delay: 0.30s;
+    }
+
+    .order-item:nth-child(7) {
+      animation-delay: 0.35s;
+    }
+
+    .order-item:nth-child(8) {
+      animation-delay: 0.40s;
+    }
+
+    .order-item:nth-child(9) {
+      animation-delay: 0.45s;
+    }
+
+    .order-item:nth-child(10) {
+      animation-delay: 0.50s;
+    }
+
+    .order-item:nth-child(11) {
+      animation-delay: 0.55s;
+    }
+
+    .order-item:nth-child(12) {
+      animation-delay: 0.60s;
+    }
+
+    .order-item:nth-child(13) {
+      animation-delay: 0.65s;
+    }
+
+    .item-number {
+      color: #d4af37;
+      font-weight: bold;
+      width: 2rem;
+      display: inline-block;
+    }
+
+    .hymn-note {
+      font-size: 0.9rem;
+      color: #c5b99b;
+      font-style: italic;
+      padding-left: 2rem;
+      margin-top: 0.2rem;
+    }
+
+    .footer-verse {
+      margin-top: 2.5rem;
+      text-align: center;
+      color: #b8b09b;
+      border-top: 1px solid #d4af37;
+      padding-top: 1.8rem;
+      font-style: italic;
+    }
+
+    /* ----- hymn pages (page 2 & 3) : only the hymn, full page ----- */
+    .hymn-full {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 500px;
+      width: 100%;
+      padding: 1.5rem;
+      background: rgba(0, 0, 0, 0.85);
+      border-radius: 28px;
+      border: 2px solid #d4af37;
+      box-shadow: 0 0 60px rgba(212, 175, 55, 0.2);
+    }
+
+    .hymn-title {
+      font-size: 2.2rem;
+      color: #d4af37;
+      text-align: center;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid;
+      padding-bottom: 0.8rem;
+      width: 100%;
+      letter-spacing: 2px;
+    }
+
+    .hymn-lyrics {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      white-space: pre-line;
+      text-align: center;
+      color: #f0ede4;
+      max-height: 60vh;
+      overflow-y: auto;
+      padding: 0 1rem;
+      font-family: 'Georgia', serif;
+      scrollbar-width: thin;
+      scrollbar-color: #d4af37 #1e1a2a;
+    }
+
+    .hymn-lyrics::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .hymn-lyrics::-webkit-scrollbar-track {
+      background: #111;
+    }
+
+    .hymn-lyrics::-webkit-scrollbar-thumb {
+      background: #d4af37;
+      border-radius: 8px;
+    }
+
+    /* ----- photo gallery page (page 4) ----- */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.2rem;
+      padding: 1.2rem 0;
+    }
+
+    .photo-card {
+      background: #181818;
+      border: 1px solid #d4af37;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 1/1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 18px black;
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.95;
+      transition: 0.3s;
+      filter: sepia(0.2) brightness(0.9);
+    }
+
+    .photo-card img:hover {
+      transform: scale(1.05);
+      opacity: 1;
+      filter: sepia(0) brightness(1.1);
+    }
+
+    .gallery-caption {
+      text-align: center;
+      color: #d4af37;
+      margin: 0.5rem 0 1.5rem;
+      font-style: italic;
+      font-size: 1.2rem;
+    }
+
+    /* ----- navigation buttons ----- */
+    .nav-bar {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      margin: 2rem 0 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: 2px solid #d4af37;
+      color: #d4af37;
+      font-size: 1.2rem;
+      padding: 0.6rem 1.6rem;
+      border-radius: 50px;
+      font-family: 'Georgia', serif;
+      cursor: pointer;
+      transition: 0.3s;
+      letter-spacing: 1px;
+      font-weight: 400;
+      box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+    }
+
+    .nav-btn:hover {
+      background: #d4af37;
+      color: black;
+      border-color: white;
+      box-shadow: 0 0 20px #d4af37;
+    }
+
+    .nav-btn.active-nav {
+      background: #d4af37;
+      color: black;
+      font-weight: bold;
+    }
+
+    .back-hint {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+    /* responsiveness */
+    @media (max-width: 550px) {
+      .pages-container {
+        padding: 1.5rem;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .sub-name {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- falling gold background -->
+  <div id="particles"></div>
+
+  <!-- main container: holds all pages -->
+  <div class="pages-container">
+    <!-- PAGE 1 : ORDER OF SERVICE (active by default) -->
+    <section id="page-order" class="page active">
+      <div class="header">
+        <div class="cross">✝</div>
+        <h1>ORDER OF SERVICE</h1>
+        <!-- <div class="sub-name">Oreoluwa</div> -->
+      </div>
+
+      <ul class="order-list">
+        <li class="order-item"><span class="item-number">1.</span> Welcome and Opening Remarks</li>
+        <li class="order-item"><span class="item-number">2.</span> Opening Prayer</li>
+        <!-- hymn items: they will have special navigation to hymn pages (js will handle) -->
+        <li class="order-item" id="nav-to-opening"><span class="item-number">3.</span> Opening Hymn <span
+            class="hymn-note">"In Christ Alone"</span></li>
+        <li class="order-item"><span class="item-number">4.</span> Scripture Reading</li>
+        <li class="order-item"><span class="item-number">5.</span> Remembering Oreoluwa's Life and Legacy</li>
+        <li class="order-item"><span class="item-number">6.</span> Musical Tribute</li>
+        <li class="order-item"><span class="item-number">7.</span> Family and Friends Tributes</li>
+        <li class="order-item"><span class="item-number">8.</span> Second Bible Reading</li>
+        <li class="order-item"><span class="item-number">9.</span> Message / Words of Comfort</li>
+        <li class="order-item"><span class="item-number">10.</span> Moment of Silence</li>
+        <li class="order-item" id="nav-to-closing"><span class="item-number">11.</span> Closing Hymn <span
+            class="hymn-note">"Now Thank We All Our God"</span></li>
+        <li class="order-item"><span class="item-number">12.</span> Closing Prayer / Benediction</li>
+        <li class="order-item"><span class="item-number">13.</span> Final Farewell</li>
+      </ul>
+
+      <!-- <div class="footer-verse">
+                "Precious in the sight of the Lord is the death of his faithful servants."<br>
+                Psalm 116:15
+            </div> -->
+    </section>
+
+    <!-- PAGE 2 : OPENING HYMN (full) -->
+    <section id="page-opening-hymn" class="page">
+      <div class="hymn-full">
+        <div class="hymn-title">In Christ Alone</div>
+        <div class="hymn-lyrics">In Christ alone my hope is found;
+          He is my light, my strength, my song;
+          this Cornerstone, this solid ground,
+          firm through the fiercest drought and storm.
+          What heights of love, what depths of peace
+          when fears are stilled, when strivings cease;
+          my Comforter, my All in All;
+          here in the love of Christ I stand.
+
+          In Christ alone who took on flesh;
+          fullness of God in helpless babe.
+          This gift of love and righteousness
+          scorned by the ones He came to save;
+          ‘til on that cross as Jesus died
+          the wrath of God was satisfied;
+          for ev’ry sin on Him was laid;
+          here in the death of Christ I live.
+
+          There in the ground His body lay;
+          Light of the world by darkness slain.
+          Then bursting forth in glorious day,
+          up from the grave He rose again!
+          And as He stands in victory,
+          sin’s curse has lost its grip on me;
+          for I am His and He is mine,
+          bought with the precious blood of Christ!
+
+          No guilt in life, no fear in death;
+          this is the pow’r of Christ in me.
+          From life’s first cry to final breath,
+          Jesus commands my destiny.
+          No pow’r of hell, no scheme of man
+          can ever pluck me from His hand;
+          ‘til He returns or calls me home,
+          here in the pow’r of Christ I’ll stand!</div>
+      </div>
+    </section>
+
+    <!-- PAGE 3 : CLOSING HYMN (full) -->
+    <section id="page-closing-hymn" class="page">
+      <div class="hymn-full">
+        <div class="hymn-title">Now Thank We All Our God</div>
+        <div class="hymn-lyrics">Now thank we all our God
+          with heart and hands and voices,
+          who wondrous things has done,
+          in whom his world rejoices;
+          who from our mothers’ arms
+          has blessed us on our way
+          with countless gifts of love,
+          and still is ours today.
+
+          O may this bounteous God
+          through all our life be near us,
+          with ever joyful hearts
+          and blessed peace to cheer us,
+          to keep us in his grace,
+          and guide us when perplexed,
+          and free us from all ills
+          By of this world in the next.
+
+          All praise and thanks to God
+          the Father now be given,
+          the Son and Spirit blest,
+          who reign in highest heaven
+          the one eternal God,
+          whom heaven and earth adore;
+          for thus it was, is now,
+          and shall be evermore.</div>
+      </div>
+    </section>
+
+    <!-- PAGE 4 : PHOTO GALLERY (placeholder pictures, all portrait of Oreoluwa – symbolic) -->
+    <section id="page-gallery" class="page">
+      <div style="text-align: center; margin-bottom: 0.8rem;">
+        <span class="cross" style="font-size: 2.5rem;">✝</span>
+        <h2 style="color: #d4af37; font-weight: 300;">in loving memory</h2>
+      </div>
+      <!-- <div class="gallery-grid">
+        
+      <div class="photo-card"><img
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%231a1a1a'/%3E%3Ccircle cx='100' cy='90' r='40' fill='%23333333' stroke='%23d4af37' stroke-width='2'/%3E%3Cpath d='M50 160 L150 160 L130 120 L70 120 Z' fill='%23333333' stroke='%23d4af37' stroke-width='2'/%3E%3Ctext x='100' y='190' font-size='16' fill='%23d4af37' text-anchor='middle' font-family='Georgia'%3EOreoluwa%3C/text%3E%3C/svg%3E"
+          alt="Oreoluwa silhouette 1"></div>
+      <div class="photo-card"><img
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%231f1f1f'/%3E%3Ccircle cx='100' cy='85' r='38' fill='%232d2d2d' stroke='%23d4af37' stroke-width='2'/%3E%3Crect x='70' y='125' width='60' height='45' fill='%232d2d2d' stroke='%23d4af37' stroke-width='2'/%3E%3Ctext x='100' y='190' font-size='16' fill='%23d4af37' text-anchor='middle' font-family='Georgia'%3E forever %3C/text%3E%3C/svg%3E"
+          alt="Oreoluwa silhouette 2"></div>
+      <div class="photo-card"><img
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23222222'/%3E%3Cpath d='M100 40 L140 90 L120 140 L80 140 L60 90 Z' fill='%232a2a2a' stroke='%23d4af37' stroke-width='2'/%3E%3Ccircle cx='100' cy='80' r='15' fill='%23333' stroke='%23d4af37' stroke-width='2'/%3E%3Ctext x='100' y='180' font-size='16' fill='%23d4af37' text-anchor='middle'%3E Oreoluwa %3C/text%3E%3C/svg%3E"
+          alt="Oreoluwa silhouette 3"></div>
+      <div class="photo-card"><img
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23262626'/%3E%3Ctext x='100' y='100' font-size='60' text-anchor='middle' fill='%23d4af37' font-family='Georgia'%3E☀%3C/text%3E%3Ctext x='100' y='150' font-size='20' fill='%23b49450' text-anchor='middle'%3Elove%3C/text%3E%3C/svg%3E"
+          alt="Oreoluwa memory"></div>
+  </div>
+  <div class="gallery-caption"> — cherished moments — </div> -->
+    </section>
+
+    <!-- navigation buttons (always visible) -->
+    <div class="nav-bar">
+      <button class="nav-btn active-nav" id="btn-order">Order of Service</button>
+      <button class="nav-btn" id="btn-opening">Opening Hymn</button>
+      <button class="nav-btn" id="btn-closing">Closing Hymn</button>
+      <button class="nav-btn" id="btn-gallery">Photos</button>
+    </div>
+    <!-- <div class="back-hint">click hymns or use buttons</div> -->
+  </div>
+
+  <script>
+    (function () {
+      // --- falling particles (gold, black background already) ---
+      const particlesContainer = document.getElementById('particles');
+      for (let i = 0; i < 55; i++) {
+        const p = document.createElement('div');
+        p.className = 'gold-particle';
+        const size = Math.random() * 10 + 3;
+        p.style.width = size + 'px';
+        p.style.height = size + 'px';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDuration = (Math.random() * 12 + 7) + 's';
+        p.style.animationDelay = Math.random() * 7 + 's';
+        p.style.backgroundColor = `rgba(212, 175, 55, ${Math.random() * 0.5 + 0.2})`;
+        particlesContainer.appendChild(p);
+      }
+
+      // --- page navigation ---
+      const pages = {
+        order: document.getElementById('page-order'),
+        opening: document.getElementById('page-opening-hymn'),
+        closing: document.getElementById('page-closing-hymn'),
+        gallery: document.getElementById('page-gallery')
+      };
+
+      const btnOrder = document.getElementById('btn-order');
+      const btnOpening = document.getElementById('btn-opening');
+      const btnClosing = document.getElementById('btn-closing');
+      const btnGallery = document.getElementById('btn-gallery');
+
+      // also the two hymn items inside order list
+      const navToOpening = document.getElementById('nav-to-opening');
+      const navToClosing = document.getElementById('nav-to-closing');
+
+      function setActive(pageId) {
+        // hide all pages
+        Object.values(pages).forEach(p => p.classList.remove('active'));
+        // show selected
+        if (pages[pageId]) pages[pageId].classList.add('active');
+
+        // update active class on nav buttons
+        [btnOrder, btnOpening, btnClosing, btnGallery].forEach(btn => btn.classList.remove('active-nav'));
+        if (pageId === 'order') btnOrder.classList.add('active-nav');
+        if (pageId === 'opening') btnOpening.classList.add('active-nav');
+        if (pageId === 'closing') btnClosing.classList.add('active-nav');
+        if (pageId === 'gallery') btnGallery.classList.add('active-nav');
+      }
+
+      // button listeners
+      btnOrder.addEventListener('click', () => setActive('order'));
+      btnOpening.addEventListener('click', () => setActive('opening'));
+      btnClosing.addEventListener('click', () => setActive('closing'));
+      btnGallery.addEventListener('click', () => setActive('gallery'));
+
+      // hymn items in order list: navigate directly to full hymn pages
+      navToOpening.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setActive('opening');
+      });
+      navToClosing.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setActive('closing');
+      });
+
+      // ensure order page can't be closed; it's the default.
+      // also any click on other order items does not change page (only hymns do)
+      // but we also might want to stay in order for other items. fine.
+
+      // If you want to show that photos can be clicked but nothing else? they are just images.
+
+      // small adjustment: style for active page transitions
+    })();
+  </script>
+</body>
+
+</html>
