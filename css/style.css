@@ -1,7 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&display=swap");
+
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 html,
@@ -30,36 +32,14 @@ canvas {
   top: 50%;
   transform: translate(-50%, -50%);
 }
+
+/* Hidden legacy static text (no longer used) */
 #staticText {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2; /* Layer above canvas */
-  font-size: 6vw; /* Responsive font size */
-  font-weight: bold;
-  text-align: center;
-  background: linear-gradient(
-    45deg,
-    #d4af37,
-    /* Light Gold */ #f0c14b,
-    /* Bright Gold */ #c99700,
-    /* Medium Gold */ #8c7000,
-    /* Dark Gold */ #c99700,
-    /* Medium Gold */ #f0c14b,
-    /* Bright Gold */ #d4af37 /* Light Gold */
-  );
-  background-clip: text;
-  -webkit-background-clip: text; /* For Safari */
-  color: transparent;
-  /* Gold hue background */
-  /* padding: 20px; */
-  display: none; /* Hidden by default */
+  display: none;
 }
+
 /**********************************/
-
 /******* 2.0 Content Styles *******/
-
 /**********************************/
 
 .content {
@@ -68,77 +48,78 @@ canvas {
   margin: auto;
   left: 0;
   right: 0;
-  top: 55%;
+  top: 50%;
+  transform: translateY(-50%);
   z-index: 11;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 0 16px;
+}
+
+/* Hero image container */
+#heroImage {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+#heroImage img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
 }
 
 h2 {
   background: linear-gradient(
     45deg,
     #d4af37,
-    /* Light Gold */ #f0c14b,
-    /* Bright Gold */ #c99700,
-    /* Medium Gold */ #8c7000,
-    /* Dark Gold */ #c99700,
-    /* Medium Gold */ #f0c14b,
-    /* Bright Gold */ #d4af37 /* Light Gold */
+    #f0c14b,
+    #c99700,
+    #8c7000,
+    #c99700,
+    #f0c14b,
+    #d4af37
   );
   background-clip: text;
-  -webkit-background-clip: text; /* For Safari */
+  -webkit-background-clip: text;
   color: transparent;
   font-weight: 500;
   margin-bottom: 10px;
 }
 
-a {
-  padding: 4px 25px 4px 4px;
-  background: #e1e3e5;
+/* Black & white Enter button */
+a.btn {
+  padding: 12px 36px;
+  background: #fff;
   color: #000;
   font-size: 14px;
-  line-height: 40px;
   display: inline-block;
   font-weight: 700;
   text-decoration: none;
-  -webkit-border-radius: 50px;
-  -moz-border-radius: 50px;
   border-radius: 50px;
-  background: linear-gradient(
-    45deg,
-    #d4af37,
-    /* Light Gold */ #f0c14b,
-    /* Bright Gold */ #c99700,
-    /* Medium Gold */ #8c7000,
-    /* Dark Gold */ #c99700,
-    /* Medium Gold */ #f0c14b,
-    /* Bright Gold */ #d4af37 /* Light Gold */
-  );
+  border: 2px solid #fff;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
+  white-space: nowrap;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-a:hover {
-  opacity: 0.8;
-}
-
-svg {
-  height: 16px;
-  width: 16px;
-  padding: 12px;
-  margin-right: 10px;
-  background: rgba(255, 255, 255, 0.4);
-  -webkit-border-radius: 50px;
-  -moz-border-radius: 50px;
-  border-radius: 50px;
-  float: left;
+a.btn:hover {
+  background: #000;
+  color: #fff;
+  border-color: #fff;
 }
 
 /**********************************/
-
 /*******    3.0 Countdown   *******/
-
 /**********************************/
 
 #countdown {
-  /*position: absolute;
-    display: none;*/
   margin: 10vh auto 70px;
   top: 35%;
   left: 0;
@@ -163,15 +144,15 @@ svg {
   background: linear-gradient(
     45deg,
     #d4af37,
-    /* Light Gold */ #f0c14b,
-    /* Bright Gold */ #c99700,
-    /* Medium Gold */ #8c7000,
-    /* Dark Gold */ #c99700,
-    /* Medium Gold */ #f0c14b,
-    /* Bright Gold */ #d4af37 /* Light Gold */
+    #f0c14b,
+    #c99700,
+    #8c7000,
+    #c99700,
+    #f0c14b,
+    #d4af37
   );
   background-clip: text;
-  -webkit-background-clip: text; /* For Safari */
+  -webkit-background-clip: text;
   color: transparent;
 }
 
@@ -185,27 +166,70 @@ svg {
   background: linear-gradient(
     45deg,
     #d4af37,
-    /* Light Gold */ #f0c14b,
-    /* Bright Gold */ #c99700,
-    /* Medium Gold */ #8c7000,
-    /* Dark Gold */ #c99700,
-    /* Medium Gold */ #f0c14b,
-    /* Bright Gold */ #d4af37 /* Light Gold */
+    #f0c14b,
+    #c99700,
+    #8c7000,
+    #c99700,
+    #f0c14b,
+    #d4af37
   );
   background-clip: text;
-  -webkit-background-clip: text; /* For Safari */
+  -webkit-background-clip: text;
   color: transparent;
   text-transform: lowercase;
 }
+
+/**********************************/
+/******* Responsive Breakpoints ***/
+/**********************************/
+
+@media screen and (max-width: 1024px) {
+  #heroImage {
+    max-width: 380px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   h2 {
     font-size: 5vw;
   }
+
+  #heroImage {
+    max-width: 300px;
+  }
+
+  #countdown {
+    width: 80%;
+  }
+
+  #countdown > div {
+    font-size: 5vw;
+  }
+
+  #countdown > div > span {
+    font-size: 2vw;
+  }
 }
+
 @media (max-width: 480px) {
+  .content {
+    gap: 20px;
+    padding: 0 24px;
+  }
+
+  #heroImage {
+    max-width: 85vw;
+  }
+
+  a.btn {
+    font-size: 13px;
+    padding: 4px 22px 4px 4px;
+  }
+
   #countdown {
     width: 100%;
   }
+
   #countdown > div {
     width: 25%;
     font-size: 30px;
@@ -213,7 +237,18 @@ svg {
     line-height: 0.8em;
     letter-spacing: 2px;
   }
+
   #countdown > div > span {
     font-size: 11px;
+  }
+}
+
+@media (max-width: 360px) {
+  #heroImage {
+    max-width: 90vw;
+  }
+
+  a.btn {
+    font-size: 12px;
   }
 }
